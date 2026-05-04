@@ -1,0 +1,154 @@
+========================================================
+  DOCUMENTACAO - CAMPOS OBRIGATORIOS POR LAYOUT
+========================================================
+
+--------------------------------------------------------
+LAYOUT 1: Arquivo com Informacoes dos Bens Patrimoniais
+  Chave: bens_patrimoniais
+--------------------------------------------------------
+
+  #  | Campo (label)                      | Tipo
+-----|------------------------------------|---------
+  1  | Nro Sequencial Bem                 | int
+  2  | Empresa                            | alpha
+  3  | Conta Patrimonial                  | alpha
+  4  | Bem Patrimonial                    | int
+  5  | Sequencia Bem                      | int
+  6  | Descricao Bem Pat                  | alpha
+  7  | Numero Plaqueta                    | alpha
+  8  | Quantidade Bens Representados      | int
+  9  | Periodicidade                      | alpha
+ 10  | Data Aquisicao                     | date
+ 11  | Estabelecimento                    | alpha
+ 12  | Bem Importado                      | yesno
+ 13  | Credita PIS                        | yesno
+ 14  | Credita COFINS                     | yesno
+ 15  | Nro Parcelas Credito PIS COFINS    | int
+ 16  | Parcelas Descontadas               | int
+ 17  | Credita CSLL                       | yesno
+ 18  | Exercicios Credito CSLL            | int
+
+Total de campos obrigatorios: 18
+
+Tipos de dados:
+  int   = numero inteiro
+  alpha = texto (alfanumerico)
+  date  = data no formato DD/MM/AAAA
+  yesno = YES ou NO
+
+
+--------------------------------------------------------
+LAYOUT 2: Arquivo com Informacoes das Incorporacoes do Bem Patrimonial
+  Chave: incorporacoes
+--------------------------------------------------------
+
+  #  | Campo (label)                      | Tipo
+-----|------------------------------------|---------
+  1  | Nro Sequencial Bem                 | int
+  2  | Sequencia Incorp                   | int
+  3  | Tipo Incorporacao                  | alpha
+  4  | Data Incorporacao                  | date
+  5  | Descricao Incorp                   | alpha
+  6  | Finalidade                         | alpha
+  7  | Bem Importado                      | yesno
+  8  | Credita PIS                        | yesno
+  9  | Credita COFINS                     | yesno
+ 10  | Nro Parcelas Credito PIS COFINS    | int
+ 11  | Parcelas Descontadas               | int
+ 12  | Credito CSLL                       | yesno
+ 13  | Exercicios Credito CSLL            | int
+
+Total de campos obrigatorios: 13
+
+Tipos de dados:
+  int   = numero inteiro
+  alpha = texto (alfanumerico)
+  date  = data no formato DD/MM/AAAA
+  yesno = YES ou NO
+
+
+--------------------------------------------------------
+LAYOUT 3: Arquivo com Informacoes de Valores do Bem e Incorporacao
+  Chave: valores
+--------------------------------------------------------
+
+  #  | Campo (label)                      | Tipo
+-----|------------------------------------|---------
+  1  | Nro Sequencial Bem                 | int
+  2  | Cenario Contabil                   | alpha
+  3  | Finalidade                         | alpha
+  4  | Valor Original                     | dec2
+
+Total de campos obrigatorios: 4
+
+Tipos de dados:
+  int   = numero inteiro
+  alpha = texto (alfanumerico)
+  dec2  = decimal com 2 casas (separador virgula, ex: 1234,56)
+
+
+--------------------------------------------------------
+LAYOUT 4: Arquivo com Informacoes de Alocacoes do Bem Patrimonial
+  Chave: alocacoes
+--------------------------------------------------------
+
+  #  | Campo (label)                      | Tipo
+-----|------------------------------------|---------
+  1  | Nro Sequencial Bem                 | int
+  2  | Plano Centros Custo                | alpha
+  3  | Centro Custo                       | alpha
+  4  | Unid Negocio                       | alpha
+  5  | Perc Apropriacao                   | dec4
+  6  | CCusto UN Principal                | yesno
+
+Total de campos obrigatorios: 6
+
+Observacao importante:
+  A soma dos percentuais de apropriacao (Perc Apropriacao) agrupados
+  por Nro Sequencial Bem deve ser igual a 100,00. Caso contrario,
+  o arquivo sera rejeitado com erro de validacao.
+
+Tipos de dados:
+  int   = numero inteiro
+  alpha = texto (alfanumerico)
+  dec4  = decimal com 4 casas (separador virgula, ex: 100,0000)
+  yesno = YES ou NO
+
+
+--------------------------------------------------------
+LAYOUT 5: Arquivo com Informacoes do Residual Minimo para Bens e Incorporacoes
+  Chave: residual_minimo
+--------------------------------------------------------
+
+  #  | Campo (label)                      | Tipo
+-----|------------------------------------|---------
+  1  | Nro Sequencial Bem                 | int
+  2  | Sequencia Incorp                   | int
+  3  | Tipo Calculo                       | alpha
+  4  | Cenario Contabil                   | alpha
+  5  | Finalidade Economica               | alpha
+  6  | Residual Minimo                    | dec2
+
+Total de campos obrigatorios: 6
+
+Tipos de dados:
+  int   = numero inteiro
+  alpha = texto (alfanumerico)
+  dec2  = decimal com 2 casas (separador virgula, ex: 1234,56)
+
+
+========================================================
+  LEGENDA GERAL DE TIPOS
+========================================================
+
+  int   = Numero inteiro (ex: 1, 100, 9999)
+  alpha = Texto alfanumerico (ex: "ABC", "Descricao aqui")
+  date  = Data no formato DD/MM/AAAA (ex: 01/01/2024)
+  yesno = Valor booleano: YES ou NO
+  dec2  = Decimal com 2 casas decimais, separador virgula (ex: 1234,56)
+  dec3  = Decimal com 3 casas decimais, separador virgula (ex: 12,500)
+  dec4  = Decimal com 4 casas decimais, separador virgula (ex: 100,0000)
+
+========================================================
+  Gerado em: 04/05/2026
+========================================================

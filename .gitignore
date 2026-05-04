@@ -1,0 +1,8 @@
+.vercel
+.venv/
+__pycache__/
+*.pyc
+*.dat
+*.zip
+.vercel/
+
