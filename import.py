@@ -215,6 +215,26 @@ def format_alpha(value) -> str:
 	return f'"{text}"'
 
 
+ALPHA_ZERO_PAD_FIELDS = {
+	"empresa": 2,
+}
+
+
+def format_alpha_with_rules(value, field_key: str | None) -> str:
+	if is_blank(value):
+		return '""'
+
+	text = str(value).strip().replace('"', "'")
+	pad_size = ALPHA_ZERO_PAD_FIELDS.get(field_key or "")
+	if pad_size:
+		numeric_text = text.replace(" ", "")
+		if re.fullmatch(r"\d+(?:[\.,]0+)?", numeric_text):
+			numeric_text = re.sub(r"[\.,]0+$", "", numeric_text)
+			text = numeric_text.zfill(pad_size)
+
+	return f'"{text}"'
+
+
 def format_yesno(value) -> str:
 	if is_blank(value):
 		return "NO"
@@ -265,11 +285,11 @@ def format_decimal(value, places: int) -> str:
 	return f"{number.quantize(quant)}".replace(".", ",")
 
 
-def format_value(value, kind: str) -> str:
+def format_value(value, kind: str, field_key: str | None = None) -> str:
 	if kind == "int":
 		return format_int(value)
 	if kind == "alpha":
-		return format_alpha(value)
+		return format_alpha_with_rules(value, field_key)
 	if kind == "yesno":
 		return format_yesno(value)
 	if kind == "date":
@@ -399,7 +419,7 @@ def generate_dat(
 			if strict_required and field.required and is_blank(raw):
 				errors.append(f"Linha {row_number + 2}: campo obrigatorio ausente -> {field.label}")
 
-			parts.append(format_value(raw, field.kind))
+			parts.append(format_value(raw, field.kind, field.key))
 
 		lines.append(" ".join(parts))
 
