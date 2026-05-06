@@ -192,7 +192,13 @@ def is_blank(value) -> bool:
 	return text == "" or text.lower() in {"nan", "none"}
 
 
-def format_int(value) -> str:
+INT_ZERO_PAD_FIELDS = {
+	"nro_sequencial_bem": 8,
+	"bem_patrimonial": 9,
+}
+
+
+def format_int(value, field_key: str | None = None) -> str:
 	if is_blank(value):
 		return "0"
 	text = str(value).strip().replace(" ", "")
@@ -200,6 +206,12 @@ def format_int(value) -> str:
 		text = text[:-2]
 	if text.endswith(".0"):
 		text = text[:-2]
+	pad_size = INT_ZERO_PAD_FIELDS.get(field_key or "")
+	if pad_size:
+		numeric_text = text.replace(".", "").replace(",", "") if re.search(r"[\.,]\d{3}$", text) else text.replace(",", ".")
+		if re.fullmatch(r"\d+(?:\.0+)?", numeric_text):
+			numeric_text = re.sub(r"\.0+$", "", numeric_text)
+			return numeric_text.zfill(pad_size)
 	text = text.replace(".", "").replace(",", "") if re.search(r"[\.,]\d{3}$", text) else text.replace(",", ".")
 	try:
 		return str(int(Decimal(text)))
@@ -288,7 +300,7 @@ def format_decimal(value, places: int) -> str:
 
 def format_value(value, kind: str, field_key: str | None = None) -> str:
 	if kind == "int":
-		return format_int(value)
+		return format_int(value, field_key)
 	if kind == "alpha":
 		return format_alpha_with_rules(value, field_key)
 	if kind == "yesno":
@@ -332,7 +344,7 @@ def validate_alocacoes_percentuais(df: pd.DataFrame, resolved_map: dict[str, str
 
 	totals: dict[str, Decimal] = {}
 	for _, row in df.iterrows():
-		bem = format_int(row[bem_col])
+		bem = format_int(row[bem_col], "nro_sequencial_bem")
 		perc = parse_decimal_value(row[perc_col])
 		totals[bem] = totals.get(bem, Decimal("0")) + perc
 
