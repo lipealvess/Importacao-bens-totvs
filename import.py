@@ -217,6 +217,7 @@ def format_alpha(value) -> str:
 
 ALPHA_ZERO_PAD_FIELDS = {
 	"empresa": 2,
+	"estabelecimento": 5,
 }
 
 
